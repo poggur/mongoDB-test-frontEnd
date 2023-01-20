@@ -1,6 +1,6 @@
-import logo from './logo.svg';
 import './App.css';
 import { useState } from 'react';
+import axios from 'axios';
 
 
 
@@ -9,19 +9,12 @@ function App() {
   const [password, setPassword] = useState("");
 
   const handleSubmit = (event) => {
-    var loginInfo = FormData();
-    loginInfo.append('name', JSON.stringify(name));
-    loginInfo.append('password', JSON.stringify(password));
-
-    fetch('http://localhost:8000/${endpoint}', {
-      method: 'POST',
-      mode: 'cors',
-      body: loginInfo
+    axios.post("http://localhost:8000/",{
+      username: name,
+      password: password
     })
-      .then(response => response.json())
-      .then(data => resolve(data))
-      .catch(error => reject(error))
-  };
+    event.preventDefault();
+  }
 
   return (
     <div className="App">
@@ -39,7 +32,7 @@ function App() {
           Password:
           <input
             id='password'
-            type="text"
+            type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)} />
         </label>
